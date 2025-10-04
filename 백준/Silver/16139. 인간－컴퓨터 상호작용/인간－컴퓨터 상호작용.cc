@@ -13,14 +13,17 @@ int main() {
     char c;
     cin >> n;
 
+    vector<vector<int>> sum(26, vector<int>(s.size() + 1, 0));
 
-    for (int i = 0; i < n; i++) {
-        total = 0;
+
+    for (int i = 0; i < s.size(); i++) {
+        for (int j = 0; j < 26; j++) sum[j][i + 1] = sum[j][i];
+        sum[s[i] - 'a'][i + 1]++;
+    }
+
+    while (n--) {
         cin >> c >> start >> end;
-
-        for (int j = start; j <= end; j++) if (s[j] == c) total++;
-
-        cout << total << '\n';
+        cout << sum[c - 'a'][end + 1] - sum[c - 'a'][start] << '\n';
     }
 
 	return 0;
